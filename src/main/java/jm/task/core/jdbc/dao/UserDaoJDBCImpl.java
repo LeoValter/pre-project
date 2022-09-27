@@ -43,8 +43,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void createUsersTable() {
         try (Connection connection = Util.getConnection();
-             Statement statement = connection.createStatement()) {
-            statement.execute(CREATE_TABLE_SQL);
+             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_TABLE_SQL)) {
+            preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -52,8 +52,8 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
         try (Connection connection = Util.getConnection();
-             Statement statement = connection.createStatement()) {
-            statement.execute(DELETE_TABLE_SQL);
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_TABLE_SQL)) {
+            preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -106,9 +106,9 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void cleanUsersTable() {
-        try (Connection connection = Util.getConnection()) {
-            Statement statement = connection.createStatement();
-            statement.execute(CLEAN_TABLE_SQL);
+        try (Connection connection = Util.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(CLEAN_TABLE_SQL)) {
+            preparedStatement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
